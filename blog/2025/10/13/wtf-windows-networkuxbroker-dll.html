@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>blog in space! - WTF Windows (NetworkUXBroker.dll)</title>
+</head>
+<body>
+    <style>
+        :root {
+            color-scheme: light dark;
+        }
+    </style>
+    <pre>
+At this point nobody would be surprised that, after a Windows update, something broke. This time it was the entire "Manage known networks" page in the settings app, which cause settings to crash. The WiFi flyout would also never propmt for passwords when trying to connect to new networks, which is a whole new level of pain.
+
+Searching on the web, nobody else seemed to have this issue, and since I am very much too stupid to figure this out on my own, it was time to enlist the help of ChatGPT.
+After going around in circles doing the usual sfc and DISM commands (which all show my system was healthy), I decided to try to at least get an error message from the settings app.
+Using WinDbg to capture the stacktrace during the crash, it turns out it was failing to load a DLL.
+
+But which DLL? ¯\_(ツ)_/¯
+
+Clearly, I have no idea how to use WinDbg, and ChatGPT doesn't either, since I wasted hours trying to find the DLL name by getting the arguments from a syscall, which yielded no results. Then ChatGPT suggested using Procmon, which finally(!) showed me which DLL couldn't be loaded (I was breaking at the wrong syscall lol).
+The culprit: NetworkUXBroker.dll.
+      
+But WTF is that? It handles many network related UI elements such as the "Manage known networks" page that was giving me grief. Turns out, the settings app was trying to load an old version of the DLL located at a non-existent path (<code>C:\Windows\WinSxS\amd64_microsoft-windows-networkux-broker_31bf3856ad364e35_10.0.26100.3323_none_d62ad5f1fbbc883e\NetworkUXBroker.dll</code>), but there was a newer version located at <code>C:\Windows\WinSxS\amd64_microsoft-windows-networkux-broker_31bf3856ad364e35_10.0.26100.6725_none_d5ff6e63fbdd22b9\NetworkUXBroker.dll</code>. But how do we tell windows to look in the correct path? After searching for the old version number in the registry (which was 10.0.26100.3323) using the command <code>reg query HKLM /f 3323 /t REG_SZ /s</code>, there was a registry entry referencing this path at <code>HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID\{E68d2B3E-192D-448E-827E-239082D74DC6}\InProcServer32</code>, which turned out to be the COM registration for NetworkUXBroker. By changing the value of the <code>(Default)</code> key to point to the correct path, the "Manage known networks" page and the WiFi flyout works properly again!
+</pre>
+</body>
+</html>
