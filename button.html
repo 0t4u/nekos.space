@@ -6,9 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>nekos in space!</title>
     <script>
-      const inIframe = window.self !== window.top;
-      console.log(inIframe)
-      if (!inIframe) document.body.classList.add("not-iframe");
+      window.onload = function () {
+        const inIframe = window.self !== window.top;
+        if (!inIframe) document.body.classList.add("not-iframe");
+      }
     </script>
 </head>
 <body>
