@@ -12,7 +12,7 @@
       }
     </script>
 </head>
-<body>
+<body style="overflow: hidden;">
   <style>
     *, *::before, *::after {
         box-sizing: border-box;
@@ -30,9 +30,6 @@
     .info {
         display: none;
     }
-    img {
-        width: 100%;
-    }
     .button {
         filter: brightness(90%);
         transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -49,7 +46,7 @@
     }
   </style>
   <a class="button" href="https://nekos.space" target="_top">
-    <img src="button.webp" alt="nekos.space" />
+    <img style="width: 100%;" src="button.webp" alt="nekos.space" />
   </a>
   <pre class="info">
 <h2>Button</h2>
