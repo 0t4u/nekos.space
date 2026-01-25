@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>nekos in space!</title>
+    <script>
+      const inIframe = window.self !== window.top;
+      if (!inIframe) document.body.classList.add("not-iframe");
+    </script>
+</head>
+<body>
+  <style>
+    div {
+      display: none;
+    }
+    
+    .not-iframe a {
+      display: none;
+    }
+
+    .not-iframe div {
+      display: block;
+    }
+  </style>
+  <a href="https://nekos.space" target="_top">
+    <img src="button.webp" alt="nekos.space" />
+  </a>
+  <div>
+    
+  </div>
+</body>
+</html>
