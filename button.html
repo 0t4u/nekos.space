@@ -31,6 +31,7 @@
         display: none;
     }
     .button {
+        display: block;
         width: fit-content;
         filter: brightness(90%);
         transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -38,7 +39,7 @@
     .button:hover {
         filter: brightness(100%);
     }
-    .not-iframe .link {
+    .not-iframe .button {
         display: none;
     }
     .not-iframe .info {
@@ -46,10 +47,8 @@
         margin: 0.5rem;
     }
   </style>
-  <a class="link" href="https://nekos.space" target="_top">
-    <div class="button">
-        <img src="button.webp" alt="nekos.space" />
-    </div>
+  <a class="button" href="https://nekos.space" target="_top">
+    <img src="button.webp" alt="nekos.space" />
   </a>
   <pre class="info">
 <h2>Button</h2>
