@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>blog in space! - Windows Power Options</title>
+</head>
+<body>
+    <style>
+        :root {
+            color-scheme: light dark;
+        }
+        pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+    </style>
+    <pre>
+<h2>Remove forced Windows update in power options</h2>
+
+This is mostly a guide for myself when I want my power options back again.
+
+Annoyingly, Windows hides the regular power options (Shut down and Restart) after it decides it wants to force you to update.
+
+Thankfully, this is controlled by a registry key, as explained by <a href="https://www.youtube.com/watch?v=cz-M6cWlrdo">this Youtube video from Enderman</a>.
+
+Change this registry key to 0:
+
+HKLM\SOFTWARE\Microsoft\WindowsUpdate\Orchestrator\ShutdownFlyoutOptions
+
+The value is made up of 4 bitflags that configure which buttons are shown.
+
++---------------------+----------+--------------------+---------+
+| 1                   | 2        | 3                  | 4       |
++---------------------+----------+--------------------+---------+
+| Update and Shutdown | Shutdown | Update and Restart | Restart |
++---------------------+----------+--------------------+---------+
+
+Useful values:
+ - Regular power options: 0
+ - Show all options: 15
+
+<a href="/">< back to homepage</a>
+</pre>
+</body>
+</html>
